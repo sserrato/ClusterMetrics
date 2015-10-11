@@ -1,0 +1,14 @@
+<h1>Emailaggregates#index</h1>
+<p>Find me in app/views/emailaggregates/index.html.erb</p>
+  <%= @totalCategory1 %>
+
+<h1>Weyland-Yutani Product Catalog</h1>
+
+        <% @emails.each do |email| %>
+              <div class="entry">
+                <h3><%=email.frequency %></h3>
+                  <%=email.year %>
+                  <%= email.domain %>
+                  <span><%=(email.category)%></span>
+              </div>
+            <% end %>
