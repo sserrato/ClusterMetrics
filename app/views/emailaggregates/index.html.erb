@@ -1,7 +1,63 @@
 <h1>Emailaggregates#index</h1>
-<p>Find me in app/views/emailaggregates/index.html.erb</p>
-  <%= @totalCategory1 %>
+  <div class="container">
+<ol>
+  <li><strong>Bridge Contact Annual Total contacts hashed</strong><%=   @bridgeContactAnnualTotal %> </li>
+  <li><strong>Total Volume of Bridge contacts by month hashed</strong><%=   @monthContacts %> </li>
+  <li><strong>Distinct Domain Count</strong><%=       @distinctDomainCount3 %> </li>
+  <li><strong>Distinct Domain Count</strong><%=       @distinctDomainCount3 %> </li>
+</ol>
 
+  </div>
+  Count by month - Jan  <%=  @monthContactsJan  %> <BR>
+  Count by month - Feb  <%=  @monthContactsFeb  %> <BR>
+  Count by month - Mar  <%=  @monthContactsMar  %> <BR>
+  Count by month - April  <%=  @monthContactsApr  %> <BR>
+  Count by month - May  <%=  @monthContactsMay  %> <BR>
+  Count by month - May Pull Out 2  <%=  @monthContactsMay[0]  %> <BR>
+  Distinct Domain Count  : <%= @distinctDomainCount3 %><BR>
+
+  Distinct Domain List : <%= @distinctDomainCount2 %><BR>
+
+        <div class="entry">
+
+
+          <ol>  <% @distinctDomainCount2.each do |ddomain| %>
+            <li><%=ddomain.domain %></li>
+              <% end %>
+          </ol>
+
+        </div>
+
+
+
+  <BR>
+<p>Find me in app/views/emailaggregates/index.html.erb</p>
+  Domain  count : <%= @domainCount %><BR>
+  Distinct Domain   : <%= @distinctDomain %><BR>
+
+  Distinct Domain Count x Month  : <%=   @distinctDomainCountByMonth  %><BR>
+  Total contact x Month  : <%=     @totalContactsbyMonth  %><BR>
+  Total category 0  : <%= @totalCategory0 %><BR>
+  Total category 1  : <%= @totalCategory1 %><BR>
+  Total category 2  : <%= @totalCategory2 %><BR>
+  Total category 3  : <%= @totalCategory3 %><BR>
+  Total category 4  : <%= @totalCategory4 %><BR>
+  Total category 5  : <%= @totalCategory5 %><BR>
+  Total category 6  : <%= @totalCategory6 %><BR>
+  Total category 7  : <%= @totalCategory7 %><BR>
+  test  : <%= @test %><BR>
+
+<span>Total category 0 by month: <%=   @totalCategory0byMonth  %></span><br>
+<span>Total category 1 by month: <%=   @totalCategory1byMonth  %></span><br>
+<span>Total category 2 by month: <%=   @totalCategory2byMonth  %></span><br>
+<span>Total category 3 by month: <%=   @totalCategory3byMonth  %></span><br>
+<span>Total category 4 by month: <%=   @totalCategory4byMonth  %></span><br>
+<span>Total category 5 by month: <%=   @totalCategory5byMonth  %></span><br>
+<span>Total category 6 by month: <%=   @totalCategory6byMonth  %></span><br>
+<span>Total category 7 by month: <%=   @totalCategory7byMonth  %></span><br>
+
+
+</div>
 <h1>Weyland-Yutani Product Catalog</h1>
 
         <% @emails.each do |email| %>
