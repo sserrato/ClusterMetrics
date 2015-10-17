@@ -5,10 +5,18 @@ class EmailaggregatesController < ApplicationController
   def index
     @emails = EmailAggregate.all.order('frequency DESC').limit(100).where("category <> '9999' AND category <> '9998' AND frequency > 4")
     @bridges = [0, 1, 2,3,4,5,6,7,9998,9999]
+    @bridgeNames = ['Not Yet Classified','Capital Bridge','Company Bridge','Research Bridge','Public Sector Bridge', 'Cluster Bridge','Global Market Bridge','Education Bridge','Junk']
+    @bridgeNamesHash = {}
+    @bridges.each do |bridge|
+      @bridgeNamesHash[bridge] = @bridgeNames[bridge]
+    end
+
+
     # Specifies the minimum contact parameter to include data in the analysis. It is 4 contats within a month reporting period.
     @minContact = 4
     @bridgeContactAnnualTotal = {}
     @domainsUnique = {}
+    #Total Annual Contact with Bridge
     @bridges.each do |bridge|
       @bridgeContactAnnualTotal[bridge] = EmailAggregate.where("category = '?'", bridge).group('month').order('month ASC').sum('frequency')
     end
@@ -25,7 +33,7 @@ class EmailaggregatesController < ApplicationController
     @monthContacts = {}
     @months = [1,2,3,4,5,6,7,8,9,10,11,12]
     @months.each do |month|
-      @monthContacts[month] = EmailAggregate.where("month = '?'", month).where("category <> '9999' AND category <> '9998'").where("frequency > ?", @minContact).group('category').order('category ASC').sum('frequency')
+    @monthContacts[month] = EmailAggregate.where("month = '?'", month).where("category <> '9999' AND category <> '9998'").where("frequency > ?", @minContact).group('category').order('category ASC').sum('frequency')
     end
 
     @monthContactsJan = EmailAggregate.where("month = '1'").where("category <> '9999' AND category <> '9998'").where("frequency > ?", @minContact).group('category').order('category ASC').sum('frequency')
