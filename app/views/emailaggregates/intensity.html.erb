@@ -1,0 +1,13 @@
+
+<h1>Emailaggregates#intensity</h1>
+<p>Find me in app/views/emailaggregates/intensity.html.erb</p>
+
+<p> <h1>frequency goals by bridge</h1> <%= @freqGoalModel %></p>
+<p>cluster goals</p>
+<p> </p>
+
+<ol>
+  <% @clusterGoals.each do |clustergoal| %>
+  <li>ID: <%= clustergoal.id %>, Bridge: <%= clustergoal.bridge %>, FreqGoal: <%= clustergoal.frequencyGoal %>, DivGoal:<%= clustergoal.diversityGoal %>, Goal <%= clustergoal.frequencyGoal * clustergoal.diversityGoal %>
+</li>
+<% end %></ol>

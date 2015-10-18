@@ -6,6 +6,26 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 EmailAggregate.delete_all
+ClusterClientGoal.delete_all
+
+goal2014 = [
+  [6,5,1,2014],
+  [4,150,2,2014],
+  [6,15,3,2014],
+  [4,40,4,2014],
+  [4,25,5,2014],
+  [2,30,6,2014],
+  [1,1,7,2014],
+  [1,1,0,2014],
+  [1,1,9998,2014],
+  [1,1,9999,2014]
+]
+
+goal2014.each do |frequencyGoal, diversityGoal, bridge, year |
+  ClusterClientGoal.create(frequencyGoal: frequencyGoal, diversityGoal: diversityGoal, bridge: bridge, year: year)
+end
+
+
 data2014 = [["fpx.se",1997,3,2014,9998,0],
 ["fpx.se",1898,2,2014,9998,0],
 ["fpx.se",1782,1,2014,9998,0],

@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  get 'emailaggregates/new'
+  get 'emailaggregates/diversity'
+  get 'emailaggregates/intensity'
+  get 'emailaggregates/lHighCharts'
+  get 'emailaggregates/stackedChart'
+  get 'emailaggregates/norms'
+  get 'emailaggregates/dashboard'
 
   get 'emailaggregates/index'
 

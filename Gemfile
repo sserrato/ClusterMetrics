@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
+gem 'lazy_high_charts'
 gem 'better_errors', '~> 2.1.1'
-gem "highcharts-rails", "~> 3.0.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.3'
+gem 'rails', '>= 3.2'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
