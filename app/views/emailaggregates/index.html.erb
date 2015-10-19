@@ -1,4 +1,26 @@
-<h1>Emailaggregates#index</h1>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Bridge</th>
+        <th>Frequency Goal</th>
+        <th>Diversity Goal</th>
+
+      </tr>
+      <tbody>
+        <% @clusterGoals.each do |c| %>
+            <tr>
+              <td><%= EmailAggregate::BRIDGENAMESMODEL[c.bridge]%> </td>
+              <td><%= c.frequencyGoal %></td>
+              <td><%=c.diversityGoal%></td>
+            <% end %>
+            </tr>
+      </tbody>
+  </table>
+
+</div>
+
+<!-- <h1>Emailaggregates#index</h1>
 <%= high_chart("some_id", @chart) %>
 
   <div class="container">
@@ -76,4 +98,4 @@
                   <%= email.domain %>
                   <span><%=(email.category)%></span>
               </div>
-            <% end %>
+            <% end %> -->

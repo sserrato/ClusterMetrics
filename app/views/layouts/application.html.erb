@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MailExplore</title>
+  <title>Cluster Metrics - FPX</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
@@ -18,19 +18,19 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Cluster Metrics <span><%= image_tag "fpx20pct.png"%></span>  </a>
+        <a class="navbar-brand" href="index">Cluster Metrics <span><%= image_tag "fpx20pct.png"%></span>  </a>
 
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Active effect <span class="sr-only">(current)</span></a></li>
-          <li><%= link_to "Total Volume", "/emailaggregates/stackedChart"  %></li>
-          <li><%= link_to "Total Contacts", "/emailaggregates/index"  %></li>
-          <li><%= link_to "Average Intensity", "/emailaggregates/intensity"  %></li>
-          <li><%= link_to "Intensity", "/emailaggregates/intensity"  %></li>
+          <li><%= link_to "Total Volume", "/emailaggregates/totalVolume"  %></li>
+          <li><%= link_to "Total Contacts", "/emailaggregates/totalContact"  %></li>
           <li><%= link_to "Diversity", "/emailaggregates/diversity"  %></li>
+          <li><%= link_to "Average Intensity", "/emailaggregates/averageIntensity"  %></li>
+          <li><%= link_to "Intensity", "/emailaggregates/intensity"  %></li>
+
 
         </ul>
         <ul class="nav navbar-nav navbar-right">

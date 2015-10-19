@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  get 'emailaggregates/totalContact'
   get 'emailaggregates/diversity'
   get 'emailaggregates/intensity'
+  get 'emailaggregates/averageIntensity'
   get 'emailaggregates/lHighCharts'
-  get 'emailaggregates/stackedChart'
+  get 'emailaggregates/totalVolume'
   get 'emailaggregates/norms'
   get 'emailaggregates/dashboard'
 

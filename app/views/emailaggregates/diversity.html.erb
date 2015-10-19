@@ -1,6 +1,24 @@
-<h1>Emailaggregates#diversity</h1>
+ <%= high_chart("some_id", @diversityChart) %>
+
+<!-- <h1>  @distinctBridgeCategories  <%= @distinctBridgeCategories %></h1>
+<h1>  @distinctBridgeCategories  <%= @distinctBridgeCategories %></h1>
+
+
+
+<div class="lead">
+  take distinct number of contacts in a month for a bridge / by goal metric = % acheived
+Stats about diversity:BRIDGENAMESMODEL<%= EmailAggregate::BRIDGENAMESMODEL %>
+</div>
+<h1>          @domainJanListcat2<%=       @domainJanListcat2  %></h1>
+<h1>      @distinctDomainCountList<%=   @distinctDomainCountList  %></h1>
+<h1>    @distinctJanuary     <%= @distinctJanuary  %></h1>
+
+
 <p>Find me in app/views/emailaggregates/diversity.html.erb</p>
+<span>Index Chart / goal Values</span>
 <p>  @   @goal1div <%=    @goal1div  %></p>
+<p>  @divGoal <%=    @divGoal  %></p>
+<p>  @monthContactsJan <%=    @monthContactsJan  %></p>
 <p>  distinctCat1ByMonth<%=   @distinctCat1ByMonth %></p>
 <p>  distinctCat2ByMonth<%=   @distinctCat2ByMonth %></p>
 <p>  distinctCat2ByMonth<%=   @distinctCat2ByMonth %></p>
@@ -9,3 +27,24 @@
 <p>  distinctCat5ByMonth<%=   @distinctCat5ByMonth %></p>
 <p>  Distinct now<%=   @distinctDomainCountCount  %></p>
 <p>  Distinct<%=   @monthDistinctDomain %></p>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Bridge</th>
+        <th>Frequency Goal</th>
+        <th>Diversity Goal</th>
+
+      </tr>
+      <tbody>
+        <% @clusterGoals.each do |c| %>
+            <tr>
+              <td><%= EmailAggregate::BRIDGENAMESMODEL[c.bridge]%> </td>
+              <td><%= c.frequencyGoal %></td>
+              <td><%=c.diversityGoal%></td>
+            <% end %>
+            </tr>
+      </tbody>
+  </table>
+
+</div> -->
