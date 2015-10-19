@@ -19,4 +19,3 @@
 //= require highcharts
 //= require highcharts/modules/exporting
 //= require highcharts/highcharts-more
-//= require highcharts/highstock
