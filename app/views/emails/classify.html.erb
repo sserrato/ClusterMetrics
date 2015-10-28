@@ -1,5 +1,8 @@
 <h1>Emails#classify</h1>
-<p>Find me in app/views/emails/classify.html.erb</p>
+<p>Download:
+ <%= link_to 'CSV', emails_classify_path(format "csv") %> |
+ <%= link_to 'Excel', emails_classify_path(format "xls") %> 
+</p>
 <div class="container">
   <table class="table table-striped">
     <thead>
