@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  resources :emails, only: [:index, :new, :create, :edit, :update]
+  post 'emails/import'
+  get 'emails/load'
+  get 'emails/classify'
+  patch 'emails/classify'
+  get 'emails/edit'
+
+  resources :clusters, only: [:index, :new, :create, :edit, :update]
+
+  root 'emailaggregates#index'
+  resources :emailaggregates, only: [:new, :create, :destroy, :edit, :update]
   get 'emailaggregates/totalContact'
   get 'emailaggregates/diversity'
   get 'emailaggregates/intensity'
@@ -7,14 +18,8 @@ Rails.application.routes.draw do
   get 'emailaggregates/totalVolume'
   get 'emailaggregates/norms'
   get 'emailaggregates/dashboard'
-
   get 'emailaggregates/index'
 
-  get 'emailaggregates/show'
-
-  get 'emailaggregates/edit'
-
-  get 'emailaggregates/delete'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

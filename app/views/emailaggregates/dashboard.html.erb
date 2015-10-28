@@ -1,0 +1,65 @@
+  @cat5   <%=   @cat5  %><br>
+  @cat1   <%=   @cat1  %><br>
+  @maxContactsCat1   <%=   @maxContactsCat1.values  %><br>
+  @minContactsCat1   <%=   @minContactsCat1.values  %><br>
+  @average   <%=     @average.values %><br>
+  @average5   <%=     @average5.values[0] %><br>
+  @avCat5   <%=     @avCat5[0] %><br>
+
+
+<div class="container">
+<%= high_chart("some_id", @areaChart) %>
+</div>
+
+  @avgCategory0byMonth    <%=  @avgCategory0byMonth  %><br>
+  @avgCategory1byMonth    <%=  @avgCategory1byMonth.values  %><br>
+  <h1>Ruby Hash Key and Value Methods </h1>
+  @avgCategory1byMonth keys    <%=  @avgCategory1byMonth.keys  %><br>
+  @avgCategory1byMonth values    <%=  @avgCategory1byMonth.values %><br>
+
+  maximum   <%=  @maximum %>
+  scopetest3   <%=  @scopetest3 %>
+  base test  <%=  @totalCategory1byMonth %>
+
+  ** test for bridge_filter with gr_category_or_category_su_frequency scopes: <br>
+  base test  <%=  @monthContactsDec %>
+  comparison using scope  <%= @scopetest2 %>
+
+
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Bridge</th>
+          <th>Frequency Goal</th>
+          <th>Diversity Goal</th>
+
+        </tr>
+        <tbody>
+            <h1>Total Contacts by bridge</h1>
+              <tr>January: <%= @monthContactsJan %><br></tr>
+              <tr>February: <%= @monthContactsFeb %><br></tr>
+              <tr>March: <%= @monthContactsMar %><br></tr>
+              <tr>April: <%= @monthContactsApr %><br></tr>
+              <tr>May: <%= @monthContactsMay %><br></tr>
+              <tr>June: <%= @monthContactsJun %><br></tr>
+              <tr>July: <%= @monthContactsJul %><br></tr>
+              <tr>August: <%= @monthContactsAug %><br></tr>
+              <tr>September: <%= @monthContactsSep %><br></tr>
+              <tr>October: <%= @monthContactsOct %><br></tr>
+              <tr>November: <%= @monthContactsNov %><br></tr>
+              <tr>December: <%= @monthContactsDec %><br></tr>
+              <h1>Total Volume by Bridge</h1>
+
+      <tr>Category 1<%=@totalCategory1byMonth %><br></tr>
+        <tr>Category 2<%=  @totalCategory2byMonth %><br></tr>
+          <tr>Category 3 <%=  @totalCategory3byMonth%><br></tr>
+          <tr>Category 4<%=  @totalCategory4byMonth %><br></tr>
+          <tr>Category 5<%=  @totalCategory5byMonth %><br></tr>
+          <tr>Category 6<%=  @totalCategory6byMonth %><br></tr>
+          <tr>Category 7<%=  @totalCategory7byMonth %><br></tr>
+
+        </tbody>
+    </table>
+
+  </div>

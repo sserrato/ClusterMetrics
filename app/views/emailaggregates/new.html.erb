@@ -1,2 +1,8 @@
-<h1>Emailaggregates#new</h1>
+<h1>Add a new data point</h1>
 <p>Find me in app/views/emailaggregates/new.html.erb</p>
+
+<%= form_for @emailaggregate do |f| %>
+  <%= f.label :domain %>:
+  <%= f.text_field :domain %>
+    <%= f.submit %>
+<% end %>

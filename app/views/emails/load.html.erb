@@ -1,0 +1,32 @@
+  <div class="container">
+    <%= form_tag emails_import_path, multipart: true do %>
+    <%= file_field_tag :file%><br>
+  </div>
+
+      <div><%= submit_tag "Load email data" %></div>
+
+    <% end %>
+
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ClusterMetric ID</th>
+        <th>Domain</th>
+        <th>Bridge</th>
+        <th>Month</th>
+        <th>Frequency</th>
+      </tr>
+      <tbody>
+        <% @emails.each do |email| %>
+            <tr>
+              <td><%= email.id%> </td>
+              <td><%= email.emaildomain%> </td>
+              <td><%= email.bridge%> </td>
+              <td><%= email.month%> </td>
+              <td><%= email.emailFrequency%> </td>
+              <% end %>
+            </tr>
+        </tbody>
+  </table>
+</div>

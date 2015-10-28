@@ -1,22 +1,74 @@
 class EmailaggregatesController < ApplicationController
-  def totalContact
+  def index
+    @clusterGoals = ClusterClientGoal.where("bridge <> 0 AND bridge <> '9999' AND bridge <> '9998'")
+    @emails = EmailAggregate.all.order('frequency DESC').limit(100).where("category <> '9999' AND category <> '9998' AND frequency >=4")
+    @bridges = [0, 1, 2,3,4,5,6,7,9998,9999]
+    @bridgeNames = ['Not Yet Classified','Capital','Company','Research','Public Sector', 'Cluster','Global Market','Education','Junk']
+    @bridgeNamesHash = {}
+          @bridges.each do |bridge|
+            @bridgeNamesHash[bridge] = @bridgeNames[bridge]
+          end
+
+
+    # Specifies the minimum contact parameter to include data in the analysis. It is 4 contats within a month reporting period.
+    @minContact = 4
+    @bridgeContactAnnualTotal = {}
+    @domainsUnique = {}
+    #Total Annual Contact with Bridge
+      @bridges.each do |bridge|
+        @bridgeContactAnnualTotal[bridge] = EmailAggregate.where("category = '?'", bridge).group('month').order('month ASC').sum('frequency')
+      end
+
+    @totalCategory0 = EmailAggregate.where("category = '0'").sum('frequency')
+    @totalCategory1 = EmailAggregate.where("category = '1'").sum('frequency')
+    @totalCategory2 = EmailAggregate.where("category = '2'").sum('frequency')
+    @totalCategory3 = EmailAggregate.where("category = '3'").sum('frequency')
+    @totalCategory4 = EmailAggregate.where("category = '4'").sum('frequency')
+    @totalCategory5 = EmailAggregate.where("category = '5'").sum('frequency')
+    @totalCategory6 = EmailAggregate.where("category = '6'").sum('frequency')
+    @totalCategory7 = EmailAggregate.where("category = '7'").sum('frequency')
+    #below hashes return months of data, using @minContact variable to specifiy minimum frequency of contact on a monthly basis to factor in the analysis. It may be interesting to put more variability.
+    @monthContacts = {}
+#    @months = [1,2,3,4,5,6,7,8,9,10,11,12]
+      EmailAggregate::MONTHVALUESMODEL.each do |month|
+      @monthContacts[month] = EmailAggregate.where("month = '?'", month).where("category <> '9999' AND category <> '9998'AND category <> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
+      end
+
+
+
+    @totalCategory0byMonth = EmailAggregate.where("category = '0'").gr_month_or_month_su_frequency
+    @totalCategory1byMonth = EmailAggregate.where("category = '1'").gr_month_or_month_su_frequency
+    @totalCategory2byMonth = EmailAggregate.where("category = '2'").gr_month_or_month_su_frequency
+    @totalCategory3byMonth = EmailAggregate.where("category = '3'").gr_month_or_month_su_frequency
+    @totalCategory4byMonth = EmailAggregate.where("category = '4'").gr_month_or_month_su_frequency
+    @totalCategory5byMonth = EmailAggregate.where("category = '5'").gr_month_or_month_su_frequency
+    @totalCategory6byMonth = EmailAggregate.where("category = '6'").gr_month_or_month_su_frequency
+    @totalCategory7byMonth = EmailAggregate.where("category = '7'").gr_month_or_month_su_frequency
+    @domainCount = EmailAggregate.group('domain').sum('frequency')
+
+    @distinctDomainCount1 = EmailAggregate.select("domain").distinct.count
+    @distinctDomainCount2 = EmailAggregate.select("domain, category").distinct.where("category <> '9999' AND category <> '9998' AND frequency >=4").order('category ASC')
+    @distinctDomainCount3 = EmailAggregate.select("domain").distinct.where("category <> '9999' AND category <> '9998' AND frequency >=4").count
+    @distinctDomain = EmailAggregate.select("domain").distinct[1]
+    @distinctDomainCountByMonth = EmailAggregate.all.select("domain").gr_month_or_month_su_frequency
+    @totalContactsbyMonth= EmailAggregate.all.group('month').order('month ASC').sum('frequency')
 
     # monthly contacts grouped by bridge
-    @monthContactsJan = EmailAggregate.where("month = '1'").where("category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsFeb = EmailAggregate.where("month = '2' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsMar = EmailAggregate.where("month = '3' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsApr = EmailAggregate.where("month = '4' AND category <> '9999' AND category <> '9998'AND category<> '0' ").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsMay = EmailAggregate.where("month = '5' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsJun = EmailAggregate.where("month = '6' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsJul = EmailAggregate.where("month = '7' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsAug = EmailAggregate.where("month = '8' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsSep = EmailAggregate.where("month = '9' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsOct = EmailAggregate.where("month = '10' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsNov = EmailAggregate.where("month = '11' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
-    @monthContactsDec = EmailAggregate.where("month = '12' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", EmailAggregate::MINCONTACT).group('category').order('category ASC').sum('frequency')
+    @monthContactsJan = EmailAggregate.where("month = '1'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsFeb = EmailAggregate.where("month = '2'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsMar = EmailAggregate.where("month = '3'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsApr = EmailAggregate.where("month = '4'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsMay = EmailAggregate.where("month = '5'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsJun = EmailAggregate.where("month = '6'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsJul = EmailAggregate.where("month = '7'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsAug = EmailAggregate.where("month = '8'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsSep = EmailAggregate.where("month = '9'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsOct = EmailAggregate.where("month = '10'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsNov = EmailAggregate.where("month = '11'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
+    @monthContactsDec = EmailAggregate.where("month = '12'").bridge_filter.where("frequency >=?", @minContact).gr_category_or_category_su_frequency
 
     #chart for monthly contacts grouped by bridge
-    @totalContactChart = LazyHighCharts::HighChart.new('graph') do |f|
+    @chart = LazyHighCharts::HighChart.new('graph') do |f|
       f.title(:text => "Total # Contacts Per Month across Categories")
       f.xAxis(:categories =>  EmailAggregate::BRIDGENAMESMODEL)
       f.series(:name => "January", :yAxis => 1, :data => @monthContactsJan.map)
@@ -42,6 +94,65 @@ class EmailaggregatesController < ApplicationController
     end
 
 
+  end
+
+  def new
+    @emailaggregate = EmailAggregate.new
+  end
+
+  def create
+    @emailaggregate = EmailAggregate.new
+    @emailaggregate = EmailAggregate.create(email_aggregate_params)
+    if @emailaggregate.save
+      redirect_to emailaggregates
+    else
+      render json: @emailaggregate.errors, status: unprocessable_entity
+    end
+  end
+
+
+  def totalContact
+    # monthly contacts grouped by bridge
+    @monthContactsJan = EmailAggregate.where("month = '1'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsFeb = EmailAggregate.where("month = '2'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsMar = EmailAggregate.where("month = '3'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsApr = EmailAggregate.where("month = '4'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsMay = EmailAggregate.where("month = '5'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsJun = EmailAggregate.where("month = '6'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsJul = EmailAggregate.where("month = '7'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsAug = EmailAggregate.where("month = '8'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsSep = EmailAggregate.where("month = '9'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsOct = EmailAggregate.where("month = '10'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsNov = EmailAggregate.where("month = '11'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsDec = EmailAggregate.where("month = '12'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+
+    #chart for monthly contacts grouped by bridge
+    @totalContactChart = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(:text => "Contact per month by bridge")
+      f.xAxis(:categories =>  EmailAggregate::BRIDGENAMESMODEL)
+      f.series(:name => "January", :yAxis => 1, :data => @monthContactsJan.map)
+      f.series(:name => "February", :yAxis => 1, :data => @monthContactsFeb.map)
+      f.series(:name => "March", :yAxis => 1, :data => @monthContactsMar.map)
+      f.series(:name => "April", :yAxis => 1, :data => @monthContactsApr.map)
+      f.series(:name => "May", :yAxis => 1, :data => @monthContactsMay.map)
+      f.series(:name => "June", :yAxis => 1, :data => @monthContactsJun.map)
+      f.series(:name => "July", :yAxis => 1, :data => @monthContactsJul.map)
+      f.series(:name => "August", :yAxis => 1, :data => @monthContactsAug.map)
+      f.series(:name => "September", :yAxis => 1, :data => @monthContactsSep.map)
+      f.series(:name => "October", :yAxis => 1, :data => @monthContactsOct.map)
+      f.series(:name => "November", :yAxis => 1, :data => @monthContactsNov.map)
+      f.series(:name => "December", :yAxis => 1, :data => @monthContactsDec.map)
+
+      f.yAxis [
+        {:title => {:text => "", :margin => 0} },
+        {:title => {:text => ""}, :opposite => true},
+      ]
+
+      f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+      f.chart({:defaultSeriesType=>"column"})
+    end
+
+ #end for def total contact
   end
 
   def norms
@@ -108,7 +219,7 @@ class EmailaggregatesController < ApplicationController
 
     #chart for monthly contacts grouped by bridge
     @diversityChart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(:text => "Contact Gap - Actual vs Goal # Contacts")
+      f.title(:text => "Contact Gap - Actual vs Goal Unique Contacts")
       f.xAxis(:categories =>  ["Capital", "Company", "Research", "Public Sector", "Cluster", "Global Market", "Education"])
       f.series(:name => "January", :yAxis => 1, :data => [0.4,0.19,0.13,0.38,0.32,0.43,0.13])
       f.series(:name => "February", :yAxis => 1, :data => [0.2,0.23,0.13,0.35,0.28,0.2,0.13])
@@ -195,11 +306,101 @@ class EmailaggregatesController < ApplicationController
   end
 
   def dashboard
+    @cat1 = []
+    @maxContactsCat1 = EmailAggregate.where("category = '1'").group('month').order('month ASC').maximum('frequency')
+    @minContactsCat1 = EmailAggregate.where("category = '1'").group('month').order('month ASC').minimum('frequency')
+
+    EmailAggregate::MONTHVALUESMODEL.each do |moContact|
+      @cat1.push([moContact, @maxContactsCat1[moContact], @minContactsCat1[moContact]])
+    end
+
+    @cat5 = []
+    @maxContactsCat5 = EmailAggregate.where("category = '5'").group('month').order('month ASC').maximum('frequency')
+    @minContactsCat5 = EmailAggregate.where("category = '5'").group('month').order('month ASC').minimum('frequency')
+    EmailAggregate::MONTHVALUESMODEL.each do |moContact|
+    @cat5.push([moContact, @maxContactsCat5[moContact], @minContactsCat5[moContact]])
+    end
+    @average5 = EmailAggregate.where("category = '5'").group('month').order('month ASC').average('frequency')
+    @avCat5 = []
+    EmailAggregate::MONTHVALUESMODEL.each do |moContact|
+    @avCat5.push(@average5.values[moContact])
+    end
+    @maximum = EmailAggregate.where("category = '1'").group('month').order('month ASC').maximum('frequency')
+    @average = EmailAggregate.where("category = '1'").group('month').order('month ASC').average('frequency')
+    @scopetest = EmailAggregate.bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @scopetest2 = EmailAggregate.where("month = '12'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @scopetest3 = EmailAggregate.where("category = '1'").group('month').order('month ASC').sum('frequency')
+    #total volume
+    @totalCategory0byMonth = EmailAggregate.where("category = '0'").gr_month_or_month_su_frequency
+    @avgCategory0byMonth = EmailAggregate.where("category = '0'").gr_month_or_month_av_frequency
+    @totalCategory1byMonth = EmailAggregate.where("category = '1'").gr_month_or_month_su_frequency
+    @avgCategory1byMonth = EmailAggregate.where("category = '1'").gr_month_or_month_av_frequency
+    @totalCategory2byMonth = EmailAggregate.where("category = '2'").gr_month_or_month_su_frequency
+    @totalCategory3byMonth = EmailAggregate.where("category = '3'").gr_month_or_month_su_frequency
+    @totalCategory4byMonth = EmailAggregate.where("category = '4'").gr_month_or_month_su_frequency
+    @totalCategory5byMonth = EmailAggregate.where("category = '5'").gr_month_or_month_su_frequency
+    @totalCategory6byMonth = EmailAggregate.where("category = '6'").gr_month_or_month_su_frequency
+    @totalCategory7byMonth = EmailAggregate.where("category = '7'").gr_month_or_month_su_frequency
+    #total contacts
+    @monthContactsJan = EmailAggregate.where("month = '1'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsFeb = EmailAggregate.where("month = '2'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsMar = EmailAggregate.where("month = '3'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsApr = EmailAggregate.where("month = '4' ").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsMay = EmailAggregate.where("month = '5'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsJun = EmailAggregate.where("month = '6'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsJul = EmailAggregate.where("month = '7'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsAug = EmailAggregate.where("month = '8'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsSep = EmailAggregate.where("month = '9'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsOct = EmailAggregate.where("month = '10'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsNov = EmailAggregate.where("month = '11'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+    @monthContactsDec = EmailAggregate.where("month = '12'").bridge_filter.where("frequency >=?", EmailAggregate::MINCONTACT).gr_category_or_category_su_frequency
+
+    @totalCategory1byMonth = EmailAggregate.where("category = '1'").gr_month_or_month_su_frequency
+    @totalCategory2byMonth = EmailAggregate.where("category = '2'").gr_month_or_month_su_frequency
+    @totalCategory3byMonth = EmailAggregate.where("category = '3'").gr_month_or_month_su_frequency
+    @totalCategory4byMonth = EmailAggregate.where("category = '4'").gr_month_or_month_su_frequency
+    @totalCategory5byMonth = EmailAggregate.where("category = '5'").gr_month_or_month_su_frequency
+    @totalCategory6byMonth = EmailAggregate.where("category = '6'").gr_month_or_month_su_frequency
+    @totalCategory7byMonth = EmailAggregate.where("category = '7'").gr_month_or_month_su_frequency
+    @areaChart = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(:text => "July Temperatures")
+      f.xAxis(:type => 'datetime')
+      f.yAxis(:title => "yaxis rtitle")
+      f.tooltip(:crosshairs => true, :shared => true, :valuesSuffix =>'C')
+      f.legend()
+      f.series(:name => 'averages', :data => [[1,20.5], [2, 19], [3, 23]], :zIndex =>1, :markers => [:fillcolor => 'white', :linewidth => 2, :lineColor => 'Highcharts.getOptions().colors[0]'])
+      f.series(:name => 'ranges',   :data => [[1, 14.3, 27.7], [2, 14.5, 27.8],[3, 15.5, 46]], :type => 'arearange', :lineWidth => 2, :linkedTo => ':previous', :color => 'violet', :fillOpacity => 0.3, :zIndex => 0 )
+    end
+    @diversityChart = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(:text => "Contact Gap - Actual vs Goal # Contacts")
+      f.subtitle(:text => "This is a subtitle")
+      f.range()
+      f.xAxis(:categories =>  ["Capital", "Company", "Research", "Public Sector", "Cluster", "Global Market", "Education"], :crosshair => true)
+      f.series(:name => "January", :yAxis => 1, :data => [0.4,0.19,0.13,0.38,0.32,0.43,0.13])
+      f.series(:name => "February", :yAxis => 1, :data => [0.2,0.23,0.13,0.35,0.28,0.2,0.13])
+      f.series(:name => "March", :yAxis => 1, :data => [0.2,0.18,0.27,0.4,0.2,0.43,0.2])
+      f.series(:name => "April", :yAxis => 1, :data =>[0.4,0.14,0.27,0.35,0.32,0.23,0.2])
+      f.series(:name => "May", :yAxis => 1, :data => [0.2,0.17,0.2,0.33,0.32,0.37,0.13])
+      f.series(:name => "June", :yAxis => 1, :data => [0.2,0.2,0.2,0.35,0.28,0.33,0.07])
+      f.series(:name => "July", :yAxis => 1, :data => [0.2,0.13,0.07,0.2,0.16,0.47,0.07])
+      f.series(:name => "August", :yAxis => 1, :data => [0.2,0.19,0.07,0.3,0.24,0.4,0.27])
+      f.series(:name => "September", :yAxis => 1, :data => [0.4,0.25,0.2,0.35,0.28,0.5,0.4])
+      f.series(:name => "October", :yAxis => 1, :data => [0.2,0.21,0.27,0.33,0.2,0.43,0.13])
+      f.series(:name => "November", :yAxis => 1, :data => [0.2,0.29,0.2,0.35,0.24,0.67,0.2])
+      f.series(:name => "December", :yAxis => 1, :data => [0.4,0.2,0.13,0.35,0.24,0.5,0.13])
+
+      f.yAxis [
+        {:title => {:text => "", :margin => 0} },
+        {:title => {:text => "% achieved"}, :opposite => true},
+      ]
+      #f.options[:tooltip][:formatter] = "function(){ return '<b>'+ this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' %'; }"
+
+      f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+      f.chart({:defaultSeriesType=>"arearange"})
+    end
+
   end
 
-  def new
-
-  end
 
 
   def lHighCharts
@@ -221,103 +422,7 @@ class EmailaggregatesController < ApplicationController
   end
 
 
-  def index
-    @clusterGoals = ClusterClientGoal.where("bridge <> 0 AND bridge <> '9999' AND bridge <> '9998'")
-    @emails = EmailAggregate.all.order('frequency DESC').limit(100).where("category <> '9999' AND category <> '9998' AND frequency >=4")
-    @bridges = [0, 1, 2,3,4,5,6,7,9998,9999]
-    @bridgeNames = ['Not Yet Classified','Capital','Company','Research','Public Sector', 'Cluster','Global Market','Education','Junk']
-    @bridgeNamesHash = {}
-    @bridges.each do |bridge|
-      @bridgeNamesHash[bridge] = @bridgeNames[bridge]
-    end
 
-
-    # Specifies the minimum contact parameter to include data in the analysis. It is 4 contats within a month reporting period.
-    @minContact = 4
-    @bridgeContactAnnualTotal = {}
-    @domainsUnique = {}
-    #Total Annual Contact with Bridge
-    @bridges.each do |bridge|
-      @bridgeContactAnnualTotal[bridge] = EmailAggregate.where("category = '?'", bridge).group('month').order('month ASC').sum('frequency')
-    end
-
-    @totalCategory0 = EmailAggregate.where("category = '0'").sum('frequency')
-    @totalCategory1 = EmailAggregate.where("category = '1'").sum('frequency')
-    @totalCategory2 = EmailAggregate.where("category = '2'").sum('frequency')
-    @totalCategory3 = EmailAggregate.where("category = '3'").sum('frequency')
-    @totalCategory4 = EmailAggregate.where("category = '4'").sum('frequency')
-    @totalCategory5 = EmailAggregate.where("category = '5'").sum('frequency')
-    @totalCategory6 = EmailAggregate.where("category = '6'").sum('frequency')
-    @totalCategory7 = EmailAggregate.where("category = '7'").sum('frequency')
-    #below hashes return months of data, using @minContact variable to specifiy minimum frequency of contact on a monthly basis to factor in the analysis. It may be interesting to put more variability.
-    @monthContacts = {}
-    @months = [1,2,3,4,5,6,7,8,9,10,11,12]
-    @monthNames = ["Jan","Feb","Mar", "Apr", "May", "Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-    @months.each do |month|
-    @monthContacts[month] = EmailAggregate.where("month = '?'", month).where("category <> '9999' AND category <> '9998'AND category <> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    end
-
-
-
-    @totalCategory0byMonth = EmailAggregate.where("category = '0'").group('month').order('month ASC').sum('frequency')
-    @totalCategory1byMonth = EmailAggregate.where("category = '1'").group('month').order('month ASC').sum('frequency')
-    @totalCategory2byMonth = EmailAggregate.where("category = '2'").group('month').order('month ASC').sum('frequency')
-    @totalCategory3byMonth = EmailAggregate.where("category = '3'").group('month').order('month ASC').sum('frequency')
-    @totalCategory4byMonth = EmailAggregate.where("category = '4'").group('month').order('month ASC').sum('frequency')
-    @totalCategory5byMonth = EmailAggregate.where("category = '5'").group('month').order('month ASC').sum('frequency')
-    @totalCategory6byMonth = EmailAggregate.where("category = '6'").group('month').order('month ASC').sum('frequency')
-    @totalCategory7byMonth = EmailAggregate.where("category = '7'").group('month').order('month ASC').sum('frequency')
-    @domainCount = EmailAggregate.group('domain').sum('frequency')
-
-    @distinctDomainCount1 = EmailAggregate.select("domain").distinct.count
-    @distinctDomainCount2 = EmailAggregate.select("domain, category").distinct.where("category <> '9999' AND category <> '9998' AND frequency >=4").order('category ASC')
-    @distinctDomainCount3 = EmailAggregate.select("domain").distinct.where("category <> '9999' AND category <> '9998' AND frequency >=4").count
-    @distinctDomain = EmailAggregate.select("domain").distinct[1]
-    @distinctDomainCountByMonth = EmailAggregate.all.select("domain").group('month').order('month ASC').sum('frequency')
-    @totalContactsbyMonth= EmailAggregate.all.group('month').order('month ASC').sum('frequency')
-
-    # monthly contacts grouped by bridge
-    @monthContactsJan = EmailAggregate.where("month = '1'").where("category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsFeb = EmailAggregate.where("month = '2' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsMar = EmailAggregate.where("month = '3' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsApr = EmailAggregate.where("month = '4' AND category <> '9999' AND category <> '9998'AND category<> '0' ").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsMay = EmailAggregate.where("month = '5' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsJun = EmailAggregate.where("month = '6' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsJul = EmailAggregate.where("month = '7' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsAug = EmailAggregate.where("month = '8' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsSep = EmailAggregate.where("month = '9' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsOct = EmailAggregate.where("month = '10' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsNov = EmailAggregate.where("month = '11' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-    @monthContactsDec = EmailAggregate.where("month = '12' AND category <> '9999' AND category <> '9998' AND category<> '0'").where("frequency >=?", @minContact).group('category').order('category ASC').sum('frequency')
-
-    #chart for monthly contacts grouped by bridge
-    @chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(:text => "Total # Contacts Per Month across Categories")
-      f.xAxis(:categories =>  EmailAggregate::BRIDGENAMESMODEL)
-      f.series(:name => "January", :yAxis => 1, :data => @monthContactsJan.map)
-      f.series(:name => "February", :yAxis => 1, :data => @monthContactsFeb.map)
-      f.series(:name => "March", :yAxis => 1, :data => @monthContactsMar.map)
-      f.series(:name => "April", :yAxis => 1, :data => @monthContactsApr.map)
-      f.series(:name => "May", :yAxis => 1, :data => @monthContactsMay.map)
-      f.series(:name => "June", :yAxis => 1, :data => @monthContactsJun.map)
-      f.series(:name => "July", :yAxis => 1, :data => @monthContactsJul.map)
-      f.series(:name => "August", :yAxis => 1, :data => @monthContactsAug.map)
-      f.series(:name => "September", :yAxis => 1, :data => @monthContactsSep.map)
-      f.series(:name => "October", :yAxis => 1, :data => @monthContactsOct.map)
-      f.series(:name => "November", :yAxis => 1, :data => @monthContactsNov.map)
-      f.series(:name => "December", :yAxis => 1, :data => @monthContactsDec.map)
-
-      f.yAxis [
-        {:title => {:text => "", :margin => 0} },
-        {:title => {:text => ""}, :opposite => true},
-      ]
-
-      f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
-      f.chart({:defaultSeriesType=>"column"})
-    end
-
-
-  end
 
   def show
   end
@@ -379,4 +484,9 @@ class EmailaggregatesController < ApplicationController
 
   def delete
   end
+
+  private
+    def email_aggregate_params
+      params.require(:emailaggregate).permit(:domain, :frequency, :category, :categoryGlobal, :month, :year)
+    end
 end

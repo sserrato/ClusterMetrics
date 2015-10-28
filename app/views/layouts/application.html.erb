@@ -32,6 +32,20 @@
           <li><%= link_to "Intensity", "/emailaggregates/intensity"  %></li>
 
 
+
+        </ul>
+        <ul class="nav navbar-nav navbar">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "New cluster", "/clusters/new" %></li>
+              <li><%= link_to "Load emails", "/emails/load" %></li>
+              <li><%= link_to "New email record", "/emails/new" %></li>
+              <li><%= link_to "Edit email records", "/emails/edit" %></li>
+              <li><%= link_to "Classify email bridges", "/emails/classify" %></li>
+
+            </ul>
+          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">

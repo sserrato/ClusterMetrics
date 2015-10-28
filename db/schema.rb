@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151018000656) do
+ActiveRecord::Schema.define(version: 20151026044808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bridges", force: :cascade do |t|
+    t.string   "bridgename"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "categorySAT"
+  end
 
   create_table "cluster_client_goals", force: :cascade do |t|
     t.integer  "frequencyGoal"
@@ -32,6 +40,12 @@ ActiveRecord::Schema.define(version: 20151018000656) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "clusters", force: :cascade do |t|
+    t.text     "clusterName"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "email_aggregates", force: :cascade do |t|
     t.string   "domain"
     t.integer  "frequency"
@@ -43,4 +57,19 @@ ActiveRecord::Schema.define(version: 20151018000656) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "emails", force: :cascade do |t|
+    t.string   "emaildomain"
+    t.integer  "bridge"
+    t.integer  "bridgeGlobal"
+    t.integer  "emailFrequency"
+    t.integer  "month"
+    t.integer  "year"
+    t.integer  "cluster_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "emails", ["cluster_id"], name: "index_emails_on_cluster_id", using: :btree
+
+  add_foreign_key "emails", "clusters"
 end

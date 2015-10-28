@@ -1,0 +1,29 @@
+<h1>Emails#classify</h1>
+<p>Find me in app/views/emails/classify.html.erb</p>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email Domain</th>
+        <th>Bridge</th>
+
+      </tr>
+      <tbody>
+        <% @emailsBridge0.each do |eb| %>
+            <tr>
+              <td><%= eb.id %> : <%= link_to "EDIT",edit_email_path(eb.id)%> </td>
+              <td><%= eb.emaildomain %></td>
+              <td><%=eb.bridge%></td>
+            <% end %>
+            </tr>
+      </tbody>
+  </table>
+
+</div>
+<%= @testVar %>
+<%= $testVar %>
+<%= form_tag "tst" do %>
+  <%= radio_button_tag "account", "default info" %>
+  <%= submit_tag "Save" %>
+<% end %>

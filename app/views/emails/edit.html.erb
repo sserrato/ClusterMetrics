@@ -1,0 +1,18 @@
+<h1>Email update</h1>
+<%= form_for @email do |f| %>
+  <%=  f.label :emaildomain %>
+  <%=  f.text_field :emaildomain %><br>
+  <%=  f.label :emailFrequency %><br>
+  <%=  f.number_field(:emailFrequency) %><br>
+  <%=  f.label :month %><br>
+  <%=  f.number_field(:month) %><br>
+    <%=  f.label :year %><br>
+  <%=  f.number_field(:year) %><br>
+  <%=  f.label :bridge %>:<br>
+  <div class='container'>
+  <% Email::BRIDGEVALUE.each do |bv| %>
+  <%= f.radio_button(:bridge, bv.to_s)%><%= Email::BRIDGENAMES[bv]%> <br>
+  <% end %>
+</div>
+<%= f.submit %>
+<% end %>

@@ -1,9 +1,12 @@
-<!-- <#% EmailAggregate::MONTHVALUESMODEL.each do |mV|%>
-<#%   @arrayThis[mV] = @totalCategory1byMonth[mV] %>
-<#%   end %>
-<#%= @totalCategory1byMonth %> -->
+<%= high_chart("my_bar_div", @chart1) %>
+<div class="page-curl shadow-bottom">
+	<p>Select bridge, group by month, order by month, sum frequency.</p>
+</div>
 
-            <%= high_chart("my_bar_div", @chart1) %>
+            <!-- <#% EmailAggregate::MONTHVALUESMODEL.each do |mV|%>
+            <#%   @arrayThis[mV] = @totalCategory1byMonth[mV] %>
+            <#%   end %>
+            <#%= @totalCategory1byMonth %> -->
             <!-- <div class="container">
 
               <table class="table table-striped">
