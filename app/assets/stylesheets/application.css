@@ -35,12 +35,11 @@
  }
 
  h1 {
- 	width: 800px;
  	margin: 0 auto;
  }
 
 nav {
- 	font-family: "Biryani", Helvetica, sans-serif;
+ 	font-family: "Biryani", Helvetica, sans-serif !important;
 }
 
  p {
