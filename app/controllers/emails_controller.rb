@@ -17,7 +17,7 @@ class EmailsController < ApplicationController
   end
 
   def load
-    @emails = Email.all.order('bridge DESC')
+    @emails = Email.all.order('id DESC')
 
     @domainsCategories =  {"126.com"=>9998,
     "163.com"=>9998,

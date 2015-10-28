@@ -1,23 +1,18 @@
 <div class="container">
- Distinct email domains <%=Email::DISTICTDOMAINS %><br>
- Distinct email domains with bridge <%=(Email::DISTICTDOMAINSBRIDGE).each do |dd| %><br>
+  <%= form_tag emails_import_path, multipart: true do %>
+  <%= file_field_tag :file%><%= submit_tag "Load email data" %>
+</div>  <% end %>
+
+  <!-- <div class="container">
+ Distinct email domains <%#=Email::DISTICTDOMAINS %><br>
+ Distinct email domains with bridge <%#=(Email::DISTICTDOMAINSBRIDGE).each do |dd| %><br>
 <ol>
-  <li><%= dd[:emaildomain] %> as <%= dd[:bridge] %></li>
-
-
+  <li><%#= dd[:emaildomain] %> as <%#= dd[:bridge] %></li>
 </ol>
- <%end %>
+ <%#end %>
+ </div> -->
 distinct domains count  <%=Email::DISTICTDOMAINSCOUNT %> <br>
 distinct emails  <%=Email::DISTINCTEMAIL %>
-</div>
-  <div class="container">
-    <%= form_tag emails_import_path, multipart: true do %>
-    <%= file_field_tag :file%><br>
-  </div>
-
-      <div><%= submit_tag "Load email data" %></div>
-
-    <% end %>
 
 <div class="container">
   <table class="table table-striped">
