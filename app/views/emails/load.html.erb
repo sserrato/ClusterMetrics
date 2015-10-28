@@ -1,7 +1,11 @@
 <div class="container">
-  <%= form_tag emails_import_path, multipart: true do %>
-  <%= file_field_tag :file%><%= submit_tag "Load email data" %>
-</div>  <% end %>
+  <h1>Load email data from CSV</h1>
+  <p>
+   <%= form_tag emails_import_path, multipart: true do %>
+   <%= file_field_tag :file%><%= submit_tag "Load email data" %>
+   <% end %>
+  </p>
+</div>
 
   <!-- <div class="container">
  Distinct email domains <%#=Email::DISTICTDOMAINS %><br>
@@ -11,8 +15,8 @@
 </ol>
  <%#end %>
  </div> -->
-distinct domains count  <%=Email::DISTICTDOMAINSCOUNT %> <br>
-distinct emails  <%=Email::DISTINCTEMAIL %>
+<!-- distinct domains counts  <%#=Email::DISTICTDOMAINSCOUNT %> <br>
+distinct emails  <%#=Email::DISTINCTEMAIL %> -->
 
 <div class="container">
   <table class="table table-striped">

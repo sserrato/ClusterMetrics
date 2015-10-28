@@ -549,11 +549,11 @@ class EmailsController < ApplicationController
 
   def import
     Email.import(params[:file])
-    redirect_to root_url, notice: "Emails imported."
+    redirect_to emails_classify_path, notice: "Emails imported."
   end
 
   def classify
-    @emailsBridge0 = Email.where("bridge = '0'")
+    @emailsBridge0 = Email.where("bridge = '0'").order("id DESC")
     respond_to do |format|
       format.html
       format.csv {send_data @emailsBridge0.to_csv}

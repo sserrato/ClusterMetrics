@@ -2,9 +2,9 @@ class Email < ActiveRecord::Base
   require 'csv'
   belongs_to :cluster
   validates :emaildomain, presence: true
-  DISTICTDOMAINS = Email.select("emaildomain").distinct.count
+  DISTICTDOMAINSCOUNT = Email.select("emaildomain").distinct.count
   DISTICTDOMAINSBRIDGE = Email.select("emaildomain, bridge").distinct.order('bridge ASC')
-  DISTICTDOMAINSCOUNT = Email.select("bridge").distinct.count
+  DISTINCTBRIDGECOUNT = Email.select("bridge").distinct.count
   DISTINCTEMAIL = Email.count
   BRIDGENAMES = ['Not Yet Classified','Capital','Company','Research','Public Sector', 'Cluster','Global Market','Education','Junk', 'NA']
   BRIDGEVALUE = [0, 1, 2,3,4,5,6,7,8,9]

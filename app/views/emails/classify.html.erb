@@ -1,8 +1,13 @@
-<h1>Emails#classify</h1>
-<p>Download:
- <%= link_to 'CSV', emails_classify_path(format "csv") %> |
- <%= link_to 'Excel', emails_classify_path(format "xls") %> 
-</p>
+  <div class="container">
+    <h1>Email classification</h1>
+    <p>
+      add filter for greater than equal to four
+    </p>
+  <p>Download:
+   <%= link_to 'CSV', emails_classify_path(format "csv") %> |
+   <%= link_to 'Excel', emails_classify_path(format "xls") %>
+  </p>
+</div>
 <div class="container">
   <table class="table table-striped">
     <thead>

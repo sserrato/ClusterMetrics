@@ -1,15 +1,13 @@
-<h1>New</h1>
-<p>Find me in app/views/clusters/new.html.erb</p>
+<div class="container">
+<h1>New email record</h1>
+<p>Add a new email record to the Cluster Metrics database.</p>
 <%= form_for @email do |f| %>
-  <%=  f.label :emaildomain %>
+  <%=  f.label "Email domain" %>
   <%=  f.text_field :emaildomain %><br>
-  <%=  f.label :emailFrequency %><br>
-  <%=  f.number_field(:emailFrequency) %><br>
-  <%=  f.label :month %><br>
-  <%=  f.number_field(:month) %><br>
-    <%=  f.label :year %><br>
-  <%=  f.number_field(:year) %><br>
-  <%=  f.label :bridge %>:<br>
+  <%=  f.label "Email Frequency" %><%=  f.number_field(:emailFrequency) %><br>
+  <%=  f.label "Month"%><%=  f.number_field(:month) %><br>
+    <%=  f.label "Year" %><%=  f.number_field(:year) %><br>
+  <%=  f.label "Bridge" %>:<br>
   <div class='container'>
   <% Email::BRIDGEVALUE.each do |bv| %>
   <%= f.radio_button(:bridge, bv.to_s)%><%= Email::BRIDGENAMES[bv]%> <br>
@@ -17,3 +15,5 @@
 </div>
 <%= f.submit %>
 <% end %>
+
+</div>

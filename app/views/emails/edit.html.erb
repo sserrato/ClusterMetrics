@@ -1,13 +1,11 @@
-<h1>Email update</h1>
+<h1>Edit Email Frequency Record  <span class="label label-info"><%=@email.id%></span></h1>
+<div class="container">
 <%= form_for @email do |f| %>
-  <%=  f.label :emaildomain %>
+  <%=  f.label "Email Domain" %>
   <%=  f.text_field :emaildomain %><br>
-  <%=  f.label :emailFrequency %><br>
-  <%=  f.number_field(:emailFrequency) %><br>
-  <%=  f.label :month %><br>
-  <%=  f.number_field(:month) %><br>
-    <%=  f.label :year %><br>
-  <%=  f.number_field(:year) %><br>
+  <%=  f.label :emailFrequency %><%=  f.number_field(:emailFrequency) %><br>
+  <%=  f.label :month %><%=  f.number_field(:month) %><br>
+    <%=  f.label :year %><%=  f.number_field(:year) %><br>
   <%=  f.label :bridge %>:<br>
   <div class='container'>
   <% Email::BRIDGEVALUE.each do |bv| %>
@@ -16,3 +14,4 @@
 </div>
 <%= f.submit %>
 <% end %>
+</container>
