@@ -21,6 +21,6 @@ class ClustersController < ApplicationController
 
   private
   def cluster_params
-    params.require(:cluster).permit(:clusterName)
+    params.require(:cluster).permit(:cluster_name)
   end
 end
