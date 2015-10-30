@@ -553,7 +553,7 @@ class EmailsController < ApplicationController
   end
 
   def classify
-    @emailsBridge0 = Email.where("bridge = '0'").order("id DESC")
+    @emailsBridge0 = Email.where("bridge = '0' AND email_frequency >='4'").order("id DESC")
     respond_to do |format|
       format.html
       format.csv {send_data @emailsBridge0.to_csv}
