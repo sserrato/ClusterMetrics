@@ -15,7 +15,10 @@
         <th>ID</th>
         <th>Email Domain</th>
         <th>Bridge</th>
-
+        <th>Frequency</th>
+        <th>Cluster</th>
+        <th>Month</th>
+        <th>Year</th>
       </tr>
       <tbody>
         <% @emailsBridge0.each do |eb| %>
@@ -23,6 +26,10 @@
               <td><%= eb.id %> : <%= link_to "EDIT",edit_email_path(eb.id)%> </td>
               <td><%= eb.emaildomain %></td>
               <td><%=eb.bridge%></td>
+              <td><%=eb.email_frequency%></td>
+              <td><%=eb.cluster_id%></td>
+              <td><%=eb.month%></td>
+              <td><%=eb.year%></td>
             <% end %>
             </tr>
       </tbody>

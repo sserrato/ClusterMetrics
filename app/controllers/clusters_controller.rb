@@ -6,7 +6,7 @@ class ClustersController < ApplicationController
   def create
     @cluster = Cluster.new cluster_params
     if @cluster.save
-      redirect_to (clusters_path)
+      redirect_to (emails_load_path)
     else
       render 'new'
     end
