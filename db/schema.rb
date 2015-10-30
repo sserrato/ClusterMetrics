@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151026044808) do
+ActiveRecord::Schema.define(version: 20151030015026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,9 +41,9 @@ ActiveRecord::Schema.define(version: 20151026044808) do
   end
 
   create_table "clusters", force: :cascade do |t|
-    t.text     "clusterName"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.text     "cluster_name"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "email_aggregates", force: :cascade do |t|
@@ -60,13 +60,13 @@ ActiveRecord::Schema.define(version: 20151026044808) do
   create_table "emails", force: :cascade do |t|
     t.string   "emaildomain"
     t.integer  "bridge"
-    t.integer  "bridgeGlobal"
-    t.integer  "emailFrequency"
+    t.integer  "bridge_global"
+    t.integer  "email_frequency"
     t.integer  "month"
     t.integer  "year"
     t.integer  "cluster_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "emails", ["cluster_id"], name: "index_emails_on_cluster_id", using: :btree

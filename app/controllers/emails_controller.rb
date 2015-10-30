@@ -578,6 +578,6 @@ class EmailsController < ApplicationController
 
   private
   def email_params
-    params.require(:email).permit(:emaildomain, :bridge, :bridgeGlobal, :emailFrequency, :month, :year, :cluster_id)
+    params.require(:email).permit(:emaildomain, :bridge, :bridge_global, :email_frequency, :month, :year, :cluster_id)
   end
 end
