@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'users/index'
+
+  get 'users/new'
+
+  get 'users/create'
+
   resources :emails, only: [:index, :new, :create, :edit, :update]
   post 'emails/import'
   get 'emails/load'
