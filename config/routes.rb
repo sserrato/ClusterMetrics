@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+
   resources :users, only: [:index, :new, :create, :edit, :update]
 
   resources :emails, only: [:index, :new, :create, :edit, :update]
