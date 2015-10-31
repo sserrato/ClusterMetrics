@@ -1,0 +1,21 @@
+<h1>Create a user</h1>
+<%= form_for @user do |f| %>
+
+<fieldset>
+  <legend> Enter User Details</legend>
+<div class="field">
+    <%=f.label :first_name, "First name:" %>
+    <%=f.text_field :first_name, size: 40 %>
+    <%=f.label :last_name, "Last name:" %>
+    <%=f.text_field :last_name, size: 40 %>
+    <%=f.label :cluster_id, "Cluster:" %>
+    <%=f.number_field :cluster_id, size: 40 %>
+    <%=f.label :email, "email:" %>
+    <%=f.text_field :email, size: 40 %>
+    <%=f.label :password_digest, "password :" %>
+    <%=f.text_field :password_digest, size: 40 %>
+    <%=f.label :access_permission, "access :" %>
+    <%=f.number_field :access_permission, size: 40 %>
+    <%= f.submit %>
+    <% end %>
+</div>
