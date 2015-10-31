@@ -553,11 +553,12 @@ class EmailsController < ApplicationController
   end
 
   def classify
-    @emailsBridge0 = Email.where("bridge = '0' AND email_frequency >='4'").order("id DESC")
+    @emails_bridge0 = Email.where("bridge = '0' AND email_frequency >='4'").order("id DESC")
     respond_to do |format|
       format.html
-      format.csv {send_data @emailsBridge0.to_csv}
-      format.xls {send_data @emailsBridge0.to_csv(col_sep: "\t")}
+      format.csv {send_data @emails_bridge0.to_csv}
+      format.xls {send_data @emails_bridge0.to_csv(col_sep: "\t")}
+      format.json {send_data @emails_bridge0.to_json}
     end
   end
 
@@ -568,8 +569,10 @@ class EmailsController < ApplicationController
 
   def update
       @email = Email.find(params[:id])
+      # Email.where("bridge = '0'").first[:id]
         if @email.update(email_params)
-          redirect_to emails_classify_path
+          @redirect_next_edit = Email.where("bridge = '0'").first
+          redirect_to edit_email_path(@redirect_next_edit)
         else
           render edit_email
         end
