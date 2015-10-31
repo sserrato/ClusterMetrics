@@ -18,7 +18,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index">Cluster Metrics <span><%= image_tag "fpx20pct.png"%></span>  </a>
+      <span><%= image_tag "fpx20pct.png"%></span>  </a>
 
       </div>
 
@@ -37,6 +37,7 @@
         <ul class="nav navbar-nav navbar">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Data<span class="caret"></span></a>
+
             <ul class="dropdown-menu">
               <li><%= link_to "New cluster", "/clusters/new" %></li>
               <li><%= link_to "Load emails", "/emails/load" %></li>
@@ -53,15 +54,38 @@
               <li><a href="#">Cluster data</a></li>
               <li><a href="#">Bridge Goals</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">Logout</a></li>
+              <div class="login_form">
+                  <%= form_tag sessions_path do %>
+                  <div class="field">
+                    <%= label_tag :email %><br>
+                    <%= text_field_tag :email, params[:email] %>
+                    </div>
+                    <div class="field">
+                      <%= label_tag :password %><br>
+                      <%= password_field_tag :password %>
+                    </div>
+                    <div class="field actions"><%= submit_tag "Log in" %></div>
+                    <% end %>
+                  </div>
+                  <% if current_user %>
+                    <li>"Hello "</li>
+                    <li><%= link_to "Logout", session_path(current_user), :method=>:delete %></li>
+                  <% else %>
+                    <li><%= link_to "Sign In", new_user_path %></li>
+                    <li><a href="#" class="login">Login</a></li>
+                    <% end %>
+          
             </ul>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
-
+<div class="yield">
+  <% flash.each do |k, v| %>
+    <h3 class="flash"><%= v %><h3>
+<% end %>
 <%= yield %>
-
+</div>
 </body>
 </html>
