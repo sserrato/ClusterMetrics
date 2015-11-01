@@ -1,5 +1,11 @@
 <div class="container">
 <h1>New email record</h1>
+<h1>find_by_session:user_ID<%=@clusterID = User.find_by_id(session[:user_id]) %></h1>
+<h1>.cluster <%=@clusterID.cluster%></h1>
+<h1>.id <%=@clusterID.id%></h1>
+<h1>.cluster_id <%=@clusterID.cluster_id%></h1>
+<h1>.email <%=@clusterID.email%></h1>
+<h1>session:email <%=session[:email]%></h1>
 <p>Add a new email record to the Cluster Metrics database.</p>
 <%= form_for @email do |f| %>
   <%=  f.label "Email domain" %>
