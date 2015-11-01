@@ -1,4 +1,6 @@
 class EmailaggregatesController < ApplicationController
+  #before_action :authenticate, except: [:index]
+  before_action :admin_only, except: [:index]
   def index
     @clusterGoals = ClusterClientGoal.where("bridge <> 0 AND bridge <> '9999' AND bridge <> '9998'")
     @emails = EmailAggregate.all.order('frequency DESC').limit(100).where("category <> '9999' AND category <> '9998' AND frequency >=4")

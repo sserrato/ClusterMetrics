@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :users, only: [:index, :new, :create, :edit, :update]
+  resources :sessions, :only => [:new, :create, :destroy]
+
 
   resources :emails, only: [:index, :new, :create, :edit, :update]
   post 'emails/import'
