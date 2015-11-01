@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def admin_only
     unless logged_in? && current_user.access_permission >0
-      flash[:error] = "Admin Only"
+      flash[:error] = "Restricted Access to SAT Admins Only"
       redirect_to root_path
     end
   end
