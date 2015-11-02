@@ -1,0 +1,21 @@
+<li role="separator" class="divider"></li>
+    <% if current_user %>
+      <li>"Hello "</li>
+      <li><%= link_to "Logout", session_path(current_user), :method=>:delete %></li>
+    <% else %>
+      <li><%= link_to "Sign In", new_user_path %></li>
+      <li><a href="#" class="login">Login</a></li>
+      <div class="login_form">
+      <%= form_tag sessions_path do %>
+      <div class="field">
+        <%= label_tag :email %><br>
+        <%= text_field_tag :email, params[:email] %>
+        </div>
+        <div class="field">
+          <%= label_tag :password %><br>
+          <%= password_field_tag :password %>
+        </div>
+        <div class="field actions"><%= submit_tag "Log in" %></div>
+        <% end %>
+      </div>
+      <% end %>

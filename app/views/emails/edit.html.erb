@@ -1,15 +1,41 @@
 <h1>Edit Email Frequency Record  <span class="label label-info"><%=@email.id%></span></h1>
-<div class="container">
+<div data-role="main" class="ui-content">
 <%= form_for @email do |f| %>
+  <%=  f.label "EMAIL DOMAIN: "+(@email[:id]).to_s %><br>
+    <%=  f.label "Cluster"%><%=  f.number_field(:cluster_id) %><br>
   <%=  f.label "EMAIL DOMAIN: "+(@email[:emaildomain]).to_s %><br>
   <%=  f.label "EMAIL FREQUENCY: "+@email[:email_frequency].to_s %><br>
   <%=  f.label "REPORTING PERIOD: "+@email[:month].to_s + " "+ @email[:year].to_s %><br>
-  <%=  f.label :bridge %>:<br>
-  <div class='container'>
-  <% Email::BRIDGEVALUE.each do |bv| %>
-  <%= f.radio_button(:bridge, bv.to_s)%><%= Email::BRIDGENAMES[bv]%> <br>
-  <% end %>
+  <div data-role="content">
+    <fieldset data-role="controlgroup" >
+      <legend>Bridge11</legend>
+        <% Email::BRIDGEVALUE.each do |bv| %>
+        <label for="<%= Email::BRIDGENAMES[bv]%>"><%= Email::BRIDGENAMES[bv]%></label>
+        <input type="radio" name=":bridge " id="<%= Email::BRIDGENAMES[bv]%>" value="<%= Email::BRIDGENAMES[bv]%>">
+          <%= f.radio_button_tag "<%= Email::BRIDGENAMES[bv]%>", bv.to_s, :bridge%>
+          <label for="<%=bv%>"> <%= Email::BRIDGENAMES[bv]%></label><br>
+          <%#= radio_button :bridge, bv.to_s, {}, {:title => :bridge}%><%#= Email::BRIDGENAMES[bv]%> <br>
+        <% end %>
+      </fieldset>
 </div>
+
 <%= f.submit %>
 <% end %>
-</container>
+
+ui-content
+class: 'eula_check'
+<%#= radio_button_tag "content[id]", content.id, {}, {:title => content.title} %><%#= content.title %>
+
+  <div data-role="main" class="ui-content">
+    <form method="post" action="demoform.asp">
+      <fieldset data-role="controlgroup">
+      <legend>Choose your gender:</legend>
+        <label for="male">Male</label>
+        <input type="radio" name="gender" id="male" value="male">
+        <label for="female">Female</label>
+        <input type="radio" name="gender" id="female" value="female">
+      </fieldset>
+        <input type="submit" data-inline="true" value="Submit">
+    </form>
+  </div>
+</div>

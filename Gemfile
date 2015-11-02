@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+gem 'jquery_mobile_rails', '~> 1.4', '>= 1.4.5'
 gem 'jquery-ui-rails', '~> 5.0.5'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'iconv'

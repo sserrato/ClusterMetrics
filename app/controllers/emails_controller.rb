@@ -562,6 +562,8 @@ class EmailsController < ApplicationController
     end
   end
 
+  def login
+  end 
   def edit
     @email = Email.find(params[:id])
     Rails.logger.debug params.inspect
