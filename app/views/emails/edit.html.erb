@@ -1,15 +1,21 @@
 <h1>Edit Email Frequency Record  <span class="label label-info"><%=@email.id%></span></h1>
-<div class="container">
-<%= form_for @email do |f| %>
-  <%=  f.label "EMAIL DOMAIN: "+(@email[:emaildomain]).to_s %><br>
-  <%=  f.label "EMAIL FREQUENCY: "+@email[:email_frequency].to_s %><br>
-  <%=  f.label "REPORTING PERIOD: "+@email[:month].to_s + " "+ @email[:year].to_s %><br>
-  <%=  f.label :bridge %>:<br>
-  <div class='container'>
-  <% Email::BRIDGEVALUE.each do |bv| %>
-  <%= f.radio_button(:bridge, bv.to_s)%><%= Email::BRIDGENAMES[bv]%> <br>
-  <% end %>
-</div>
-<%= f.submit %>
-<% end %>
-</container>
+    <div class="container">
+      <div class="lead">
+        <ul>
+          <li>Email domain: <%= @email.emaildomain %> </li>
+          <li>This domain was contacted <%= @email.email_frequency %> times during <%= @email.month%> / <%= @email.year%>  </li>
+        </ul>
+      </div>
+          <%= form_for @email do |f| %>
+          <%=  f.label :bridge %>:<br>
+        <div class='btn-group' data-toggle='buttons'>
+          <% Email::BRIDGEVALUE.each do |bv| %>
+            <label class='btn btn-primary'>
+                <%= f.radio_button(:bridge, bv.to_s)%><%= Email::BRIDGENAMES[bv]%>
+            </label> <br>
+          <% end %>
+          <%= f.submit %>
+        </div>
+      <span> </span>
+    <% end %>
+  </div>
