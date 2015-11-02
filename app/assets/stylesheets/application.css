@@ -22,9 +22,10 @@
 
  body { padding-bottom: 70px;
  margin: 0 auto;}
- @import url(https://fonts.googleapis.com/css?family=Biryani:400,800);
 
+ @import url(https://fonts.googleapis.com/css?family=Biryani:400,800);
  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+
   html {
  	background: #DEF;
  	background: -moz-linear-gradient(45deg, #EFF, #DEF);
